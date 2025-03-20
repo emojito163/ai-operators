@@ -1,0 +1,15 @@
+#include "hdpl/intrinsic.h"
+
+__global__ void vec_softmax_kernel(void* a, void* b, int num) {
+  int num_per_proc = num / 4;
+  int proc_id = GetProcId();
+  int offset = proc_id * num_per_proc;
+
+  int8_t* aa = (int8_t*)a;
+  int8_t* bb = (int8_t*)b;
+  for (int i = 0; i < num_per_proc; i++) {
+    *(aa + offset + i) = *(bb + offset + i);
+  }
+  RISCV_FENCE_I;  // Flush cache
+}
+
