@@ -5,10 +5,10 @@ __global__ void vec_add_kernel(void* a, void* b, void* c, int num) {
   int proc_id = GetProcId();
   int offset = proc_id * num_per_proc;
 
-  int8_t* aa = (int8_t*)a;
-  int8_t* bb = (int8_t*)b;
-  int8_t* cc = (int8_t*)c;
-  for (int i = 0; i < num_per_proc; i++) {
+  int8_t* aa = reinterpret_cast<int8_t*>(a);
+  int8_t* bb = reinterpret_cast<int8_t*>(b);
+  int8_t* cc = reinterpret_cast<int8_t*>(c);
+  for (int i = 0; i < num_per_proc; ++i) {
     *(cc + offset + i) = *(aa + offset + i) + *(bb + offset + i);
   }
   RISCV_FENCE_I;  // Flush cache
