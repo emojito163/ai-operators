@@ -1,0 +1,58 @@
+#include <vec_kernels.h>
+
+__global__ void vec_add_kernel(void* a, void* b, void* c, int num) {
+  int num_per_proc = num / 4;
+  int proc_id = GetProcId();
+  int offset = proc_id * num_per_proc;
+
+  int8_t* aa = reinterpret_cast<int8_t*>(a);
+  int8_t* bb = reinterpret_cast<int8_t*>(b);
+  int8_t* cc = reinterpret_cast<int8_t*>(c);
+  for (int i = 0; i < num_per_proc; ++i) {
+    *(cc + offset + i) = *(aa + offset + i) + *(bb + offset + i);
+  }
+  RISCV_FENCE_I;  // Flush cache
+}
+
+__global__ void vec_abs_kernel(void* a, void* b, int num) {
+  int num_per_proc = num / 4;
+  int proc_id = GetProcId();
+  int offset = proc_id * num_per_proc;
+
+  int8_t* aa = reinterpret_cast<int8_t*>(a);
+  int8_t* bb = reinterpret_cast<int8_t*>(b);
+  for (int i = 0; i < num_per_proc; ++i) {
+    *(bb + offset + i) = *(aa + offset + i) < 0 ? -*(aa + offset + i) : *(aa + offset + i);
+  }
+  RISCV_FENCE_I;  // Flush cache
+}
+
+__global__ void vec_exp_kernel(void* a, void* b, int num) {
+  int num_per_proc = num / 4;
+  int proc_id = GetProcId();
+  int offset = proc_id * num_per_proc;
+
+  int8_t* aa = reinterpret_cast<int8_t*>(a);
+  int8_t* bb = reinterpret_cast<int8_t*>(b);
+  for (int i{}; i < num_per_proc; ++i) {
+    if (*(aa + offset + i) < 0) {
+        *(bb + offset + i) = 0;
+    }
+    switch (*(aa + offset + i)) {
+    case 0:
+        *(bb + offset + i) = 1;
+    case 1:
+        *(bb + offset + i) = 2;
+    case 2:
+        *(bb + offset + i) = 7;
+    case 3:
+        *(bb + offset + i) = 20;
+    case 4:
+        *(bb + offset + i) = 54;
+    default:
+        *(bb + offset + i) = 127;
+    }
+  }
+  RISCV_FENCE_I;  // Flush cache
+}
+
