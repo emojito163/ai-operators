@@ -1,9 +1,5 @@
 // Copyright (c) 2021 The Houmo.ai Authors. All rights reserved.
 
-//#ifdef _GLIBCXX_USE_FLOAT128
-//#undef _GLIBCXX_USE_FLOAT128
-//#endif
-
 #include <cstdio>
 #include <cstdlib>
 
