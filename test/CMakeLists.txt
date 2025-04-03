@@ -22,7 +22,7 @@ link_directories(/usr/local/houmo/lib)
 
 foreach (a_test IN LISTS TEST_SRCS)
     get_filename_component(filename ${a_test} NAME_WE)
-    add_executable(${filename} ${a_test} "${CMAKE_SOURCE_DIR}/../src/vec_kernels.hu")
+    add_executable(${filename} ${a_test})
     target_link_libraries(${filename} PRIVATE hdplrt idnnl)
     add_test(NAME ${filename} COMMAND ${CMAKE_BINARY_DIR}/${filename})
 endforeach()

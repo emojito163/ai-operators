@@ -1,5 +1,3 @@
-// Copyright (c) 2021 The Houmo.ai Authors. All rights reserved.
-
 #include <cstdio>
 #include <cstdlib>
 
@@ -14,13 +12,13 @@ int main() {
   auto c_host = (int8_t*)malloc(n * sizeof(int8_t));
 
   auto c_expect = (int8_t*)malloc(n * sizeof(int8_t));
-  void* a_dev = nullptr;
-  void* b_dev = nullptr;
-  void* c_dev = nullptr;
+  int8_t* a_dev = nullptr;
+  int8_t* b_dev = nullptr;
+  int8_t* c_dev = nullptr;
 
-  hdplMalloc(&a_dev, n * sizeof(int8_t));
-  hdplMalloc(&b_dev, n * sizeof(int8_t));
-  hdplMalloc(&c_dev, n * sizeof(int8_t));
+  hdplMalloc(reinterpret_cast<void**>(&a_dev), n * sizeof(int8_t));
+  hdplMalloc(reinterpret_cast<void**>(&b_dev), n * sizeof(int8_t));
+  hdplMalloc(reinterpret_cast<void**>(&c_dev), n * sizeof(int8_t));
 
   for (int i = 0; i < n; i++) {
     a_host[i] = 1;
@@ -31,7 +29,7 @@ int main() {
   hdplMemcpy(b_dev, b_host, n * sizeof(int8_t), hdplMemcpyHostToDevice);
 
   // Launch kernel
-  vec_add_kernel<<<1, 4>>>(a_dev, b_dev, c_dev, n);
+  vec_add_kernel<1, 4>(a_dev, b_dev, c_dev, n);
 
   hdplStreamSynchronize(nullptr);
 

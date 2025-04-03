@@ -10,11 +10,11 @@ int main() {
   auto a_host = (int8_t*)malloc(n * sizeof(int8_t));
   auto c_host = (int8_t*)malloc(n * sizeof(int8_t));
 
-  void* a_dev = nullptr;
-  void* c_dev = nullptr;
+  int8_t* a_dev = nullptr;
+  int8_t* c_dev = nullptr;
 
-  hdplMalloc(&a_dev, n * sizeof(int8_t));
-  hdplMalloc(&c_dev, n * sizeof(int8_t));
+  hdplMalloc(reinterpret_cast<void**>(&a_dev), n * sizeof(int8_t));
+  hdplMalloc(reinterpret_cast<void**>(&c_dev), n * sizeof(int8_t));
 
   for (int i = 0; i < n; i++) {
     a_host[i] = i & 1 ? 1 : -1;
@@ -22,7 +22,7 @@ int main() {
   hdplMemcpy(a_dev, a_host, n * sizeof(int8_t), hdplMemcpyHostToDevice);
 
   // Launch kernel
-  vec_abs_kernel<<<1, 4>>>(a_dev, c_dev, n);
+  vec_abs_kernel<1, 4>(a_dev, c_dev, n);
 
   hdplStreamSynchronize(nullptr);
 
