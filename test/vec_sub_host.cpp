@@ -21,15 +21,15 @@ int main() noexcept {
   hdplMalloc(reinterpret_cast<void**>(&c_dev), n * sizeof(int8_t));
 
   for (int i = 0; i < n; ++i) {
-    a_host[i] = 1;
+    a_host[i] = 2;
     b_host[i] = 1;
-    c_expect[i] = a_host[i] + b_host[i];
+    c_expect[i] = a_host[i] - b_host[i];
   }
   hdplMemcpy(a_dev, a_host, n * sizeof(int8_t), hdplMemcpyHostToDevice);
   hdplMemcpy(b_dev, b_host, n * sizeof(int8_t), hdplMemcpyHostToDevice);
 
   // Launch kernel
-  vec_add_kernel<1, 4>(a_dev, b_dev, c_dev, n);
+  vec_sub_kernel<1, 4>(a_dev, b_dev, c_dev, n);
 
   hdplStreamSynchronize(nullptr);
 
