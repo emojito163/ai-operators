@@ -6,10 +6,10 @@
 
 int main() noexcept {
   // NOTE data size must be multiple of 64 to fill cache line.
-  int n = 64 * 4;
-  auto a_host = (int8_t*)malloc(n * sizeof(int8_t));
-  auto b_host = (int8_t*)malloc(n * sizeof(int8_t));
-  auto c_host = (int8_t*)malloc(n * sizeof(int8_t));
+    constexpr ::std::size_t n{64 * 4};
+  auto a_host = reinterpret_cast<int8_t*>(malloc(n * sizeof(int8_t)));
+  auto b_host = reinterpret_cast<int8_t*>(malloc(n * sizeof(int8_t)));
+  auto c_host = reinterpret_cast<int8_t*>(malloc(n * sizeof(int8_t)));
 
   auto c_expect = (int8_t*)malloc(n * sizeof(int8_t));
   int8_t* a_dev = nullptr;
