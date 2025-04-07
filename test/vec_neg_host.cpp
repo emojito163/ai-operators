@@ -6,7 +6,7 @@
 
 int main() {
   // NOTE data size must be multiple of 64 to fill cache line.
-  constexpr auto n = 64 * 4;
+    constexpr ::std::size_t n{64 * 4};
   auto a_host = reinterpret_cast<int8_t*>(malloc(n * sizeof(int8_t)));
   auto c_host = reinterpret_cast<int8_t*>(malloc(n * sizeof(int8_t)));
 

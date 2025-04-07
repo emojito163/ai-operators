@@ -27,4 +27,3 @@ foreach (a_test IN LISTS TEST_SRCS)
     add_test(NAME ${filename} COMMAND ${CMAKE_BINARY_DIR}/${filename})
 endforeach()
 
-
