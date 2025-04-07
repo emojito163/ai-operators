@@ -1,4 +1,3 @@
-#include <cstdio>
 #include <cstdlib>
 
 #include <hdpl/hdpl_runtime.h>
@@ -20,7 +19,7 @@ int main() noexcept {
   hdplMalloc(reinterpret_cast<void**>(&b_dev), n * sizeof(int8_t));
   hdplMalloc(reinterpret_cast<void**>(&c_dev), n * sizeof(int8_t));
 
-  for (int i = 0; i < n; ++i) {
+  for (::std::size_t i{}; i < n; ++i) {
     a_host[i] = 1;
     b_host[i] = 1;
     c_expect[i] = a_host[i] + b_host[i];
@@ -35,13 +34,12 @@ int main() noexcept {
 
   hdplMemcpy(c_host, c_dev, n * sizeof(int8_t), hdplMemcpyDeviceToHost);
 
-  for (int i = 0; i < n; ++i) {
+  for (::std::size_t i{}; i < n; ++i) {
     if (c_host[i] != c_expect[i])
 #if __has_cpp_attribute(unlikely)
         [[unlikely]]
 #endif
     {
-      printf("The result c[%d] is %d, the expect result should be %d.\n", i, c_host[i], c_expect[i]);
       __builtin_trap();
     }
   }

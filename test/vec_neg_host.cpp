@@ -16,7 +16,7 @@ int main() {
   hdplMalloc(reinterpret_cast<void**>(&a_dev), n * sizeof(int8_t));
   hdplMalloc(reinterpret_cast<void**>(&c_dev), n * sizeof(int8_t));
 
-  for (int i = 0; i < n; i++) {
+  for (::std::size_t i{}; i < n; ++i) {
     a_host[i] = i & 1 ? 1 : -1;
   }
   hdplMemcpy(a_dev, a_host, n * sizeof(int8_t), hdplMemcpyHostToDevice);

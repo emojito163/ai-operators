@@ -6,7 +6,7 @@
 
 int main() {
   // NOTE data size must be multiple of 64 to fill cache line.
-  constexpr auto n = 64 * 4;
+  constexpr ::std::size_t n{64 * 4};
   auto a_host = reinterpret_cast<int8_t*>(malloc(n * sizeof(int8_t)));
   auto c_host = reinterpret_cast<int8_t*>(malloc(n * sizeof(int8_t)));
 
@@ -16,7 +16,7 @@ int main() {
   hdplMalloc(reinterpret_cast<void**>(&a_dev), n * sizeof(int8_t));
   hdplMalloc(reinterpret_cast<void**>(&c_dev), n * sizeof(int8_t));
 
-  for (int i = 0; i < n; i++) {
+  for (::std::size_t i{}; i < n; ++i) {
     a_host[i] = i & 1 ? 1 : -1;
   }
   hdplMemcpy(a_dev, a_host, n * sizeof(int8_t), hdplMemcpyHostToDevice);
