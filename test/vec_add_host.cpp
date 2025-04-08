@@ -1,7 +1,7 @@
 #include <cstdlib>
 
 #include <hdpl/hdpl_runtime.h>
-#include <vec_kernels.h>
+#include <vec_kernels.hh>
 
 int main() noexcept {
   // NOTE data size must be multiple of 64 to fill cache line.
