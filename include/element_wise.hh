@@ -7,8 +7,8 @@
 namespace details {
 
 template<::std::size_t ProcNum>
-__global__ void vec_add_kernel_(::std::int8_t const*const __restrict a, ::std::int8_t const*const __restrict b,
-                                ::std::int8_t*const __restrict c, ::std::size_t const num) {
+__global__ void vec_add_kernel_(::std::int8_t const* const __restrict a, ::std::int8_t const* const __restrict b,
+                                ::std::int8_t* const __restrict c, ::std::size_t const num) {
     ::std::size_t num_per_proc{num / ProcNum};
     int proc_id = GetProcId();
     ::std::size_t const offset{proc_id * num_per_proc};
@@ -23,16 +23,16 @@ __global__ void vec_add_kernel_(::std::int8_t const*const __restrict a, ::std::i
 
 template<::std::size_t Kernel, ::std::size_t Tier>
 [[gnu::always_inline]]
-inline void vec_add_kernel(::std::int8_t const*const __restrict a, ::std::int8_t const*const __restrict b,
-                           ::std::int8_t*const __restrict c, ::std::size_t const num) noexcept {
+inline void vec_add_kernel(::std::int8_t const* const __restrict a, ::std::int8_t const* const __restrict b,
+                           ::std::int8_t* const __restrict c, ::std::size_t const num) noexcept {
     ::details::vec_add_kernel_<Kernel * Tier><<<Kernel, Tier>>>(a, b, c, num);
 }
 
 namespace details {
 
 template<::std::size_t ProcNum>
-__global__ void vec_sub_kernel_(::std::int8_t const*const __restrict a, ::std::int8_t const*const __restrict b,
-                                ::std::int8_t*const __restrict c, ::std::size_t const num) {
+__global__ void vec_sub_kernel_(::std::int8_t const* const __restrict a, ::std::int8_t const* const __restrict b,
+                                ::std::int8_t* const __restrict c, ::std::size_t const num) {
     ::std::size_t num_per_proc{num / ProcNum};
     int proc_id = GetProcId();
     ::std::size_t const offset{proc_id * num_per_proc};
@@ -47,16 +47,16 @@ __global__ void vec_sub_kernel_(::std::int8_t const*const __restrict a, ::std::i
 
 template<::std::size_t Kernel, ::std::size_t Tier>
 [[gnu::always_inline]]
-inline void vec_sub_kernel(::std::int8_t const*const __restrict a, ::std::int8_t const*const __restrict b,
-                           ::std::int8_t*const __restrict c, ::std::size_t const num) noexcept {
+inline void vec_sub_kernel(::std::int8_t const* const __restrict a, ::std::int8_t const* const __restrict b,
+                           ::std::int8_t* const __restrict c, ::std::size_t const num) noexcept {
     ::details::vec_sub_kernel_<Kernel * Tier><<<Kernel, Tier>>>(a, b, c, num);
 }
 
 namespace details {
 
 template<::std::size_t ProcNum>
-__global__ void vec_mul_kernel_(::std::int8_t const*const __restrict a, ::std::int8_t const*const __restrict b,
-                                ::std::int8_t*const __restrict c, ::std::size_t const num) {
+__global__ void vec_mul_kernel_(::std::int8_t const* const __restrict a, ::std::int8_t const* const __restrict b,
+                                ::std::int8_t* const __restrict c, ::std::size_t const num) {
     ::std::size_t num_per_proc{num / ProcNum};
     int proc_id = GetProcId();
     ::std::size_t const offset{proc_id * num_per_proc};
@@ -71,16 +71,16 @@ __global__ void vec_mul_kernel_(::std::int8_t const*const __restrict a, ::std::i
 
 template<::std::size_t Kernel, ::std::size_t Tier>
 [[gnu::always_inline]]
-inline void vec_mul_kernel(::std::int8_t const*const __restrict a, ::std::int8_t const*const __restrict b,
-                           ::std::int8_t*const __restrict c, ::std::size_t const num) noexcept {
+inline void vec_mul_kernel(::std::int8_t const* const __restrict a, ::std::int8_t const* const __restrict b,
+                           ::std::int8_t* const __restrict c, ::std::size_t const num) noexcept {
     ::details::vec_mul_kernel_<Kernel * Tier><<<Kernel, Tier>>>(a, b, c, num);
 }
 
 namespace details {
 
 template<::std::size_t ProcNum>
-__global__ void vec_div_kernel_(::std::int8_t const*const __restrict a, ::std::int8_t const*const __restrict b,
-                                ::std::int8_t*const __restrict c, ::std::size_t const num) {
+__global__ void vec_div_kernel_(::std::int8_t const* const __restrict a, ::std::int8_t const* const __restrict b,
+                                ::std::int8_t* const __restrict c, ::std::size_t const num) {
     ::std::size_t num_per_proc{num / ProcNum};
     int proc_id = GetProcId();
     ::std::size_t const offset{proc_id * num_per_proc};
@@ -95,15 +95,15 @@ __global__ void vec_div_kernel_(::std::int8_t const*const __restrict a, ::std::i
 
 template<::std::size_t Kernel, ::std::size_t Tier>
 [[gnu::always_inline]]
-inline void vec_div_kernel(::std::int8_t const*const __restrict a, ::std::int8_t const*const __restrict b,
-                           ::std::int8_t*const __restrict c, ::std::size_t const num) noexcept {
+inline void vec_div_kernel(::std::int8_t const* const __restrict a, ::std::int8_t const* const __restrict b,
+                           ::std::int8_t* const __restrict c, ::std::size_t const num) noexcept {
     ::details::vec_div_kernel_<Kernel * Tier><<<Kernel, Tier>>>(a, b, c, num);
 }
 
 namespace details {
 
 template<::std::size_t ProcNum>
-__global__ void vec_abs_kernel_(::std::int8_t const*const __restrict a, ::std::int8_t *const __restrict b,
+__global__ void vec_abs_kernel_(::std::int8_t const* const __restrict a, ::std::int8_t* const __restrict b,
                                 ::std::size_t const num) {
     ::std::size_t num_per_proc{num / ProcNum};
     int proc_id = GetProcId();
@@ -119,7 +119,7 @@ __global__ void vec_abs_kernel_(::std::int8_t const*const __restrict a, ::std::i
 
 template<::std::size_t Kernel, ::std::size_t Tier>
 [[gnu::always_inline]]
-inline void vec_abs_kernel(::std::int8_t const*const __restrict a, ::std::int8_t *const __restrict b,
+inline void vec_abs_kernel(::std::int8_t const* const __restrict a, ::std::int8_t* const __restrict b,
                            ::std::size_t const num) noexcept {
     ::details::vec_abs_kernel_<Kernel * Tier><<<Kernel, Tier>>>(a, b, num);
 }
@@ -127,7 +127,7 @@ inline void vec_abs_kernel(::std::int8_t const*const __restrict a, ::std::int8_t
 namespace details {
 
 template<::std::size_t ProcNum>
-__global__ void vec_neg_kernel_(::std::int8_t const*const __restrict a, ::std::int8_t*const __restrict b,
+__global__ void vec_neg_kernel_(::std::int8_t const* const __restrict a, ::std::int8_t* const __restrict b,
                                 ::std::size_t const num) {
     ::std::size_t num_per_proc{num / ProcNum};
     int proc_id = GetProcId();
@@ -143,7 +143,7 @@ __global__ void vec_neg_kernel_(::std::int8_t const*const __restrict a, ::std::i
 
 template<::std::size_t Kernel, ::std::size_t Tier>
 [[gnu::always_inline]]
-inline void vec_neg_kernel(::std::int8_t const*const __restrict a, ::std::int8_t*const __restrict b,
+inline void vec_neg_kernel(::std::int8_t const* const __restrict a, ::std::int8_t* const __restrict b,
                            ::std::size_t const num) noexcept {
     ::details::vec_neg_kernel_<Kernel * Tier><<<Kernel, Tier>>>(a, b, num);
 }
@@ -151,7 +151,7 @@ inline void vec_neg_kernel(::std::int8_t const*const __restrict a, ::std::int8_t
 namespace details {
 
 template<::std::size_t ProcNum>
-__global__ void vec_exp_kernel_(::std::int8_t const*const __restrict a, ::std::int8_t*const __restrict b,
+__global__ void vec_exp_kernel_(::std::int8_t const* const __restrict a, ::std::int8_t* const __restrict b,
                                 ::std::size_t const num) {
     ::std::size_t num_per_proc{num / ProcNum};
     int proc_id = GetProcId();
@@ -182,7 +182,7 @@ __global__ void vec_exp_kernel_(::std::int8_t const*const __restrict a, ::std::i
 
 template<::std::size_t Kernel, ::std::size_t Tier>
 [[gnu::always_inline]]
-inline void vec_exp_kernel(::std::int8_t const*const __restrict a, ::std::int8_t*const __restrict b,
+inline void vec_exp_kernel(::std::int8_t const* const __restrict a, ::std::int8_t* const __restrict b,
                            ::std::size_t const num) noexcept {
     ::details::vec_exp_kernel_<Kernel * Tier><<<Kernel, Tier>>>(a, b, num);
 }
@@ -190,7 +190,7 @@ inline void vec_exp_kernel(::std::int8_t const*const __restrict a, ::std::int8_t
 namespace details {
 
 template<::std::size_t ProcNum, bool ndebug>
-__global__ void vec_sqrt_kernel_(::std::int8_t const*const __restrict a, ::std::int8_t*const __restrict b,
+__global__ void vec_sqrt_kernel_(::std::int8_t const* const __restrict a, ::std::int8_t* const __restrict b,
                                  ::std::size_t const num) {
     ::std::size_t num_per_proc{num / ProcNum};
     int proc_id = GetProcId();
@@ -242,7 +242,7 @@ __global__ void vec_sqrt_kernel_(::std::int8_t const*const __restrict a, ::std::
 
 template<::std::size_t Kernel, ::std::size_t Tier, bool ndebug = false>
 [[gnu::always_inline]]
-inline void vec_sqrt_kernel(::std::int8_t const*const __restrict a, ::std::int8_t*const __restrict b,
+inline void vec_sqrt_kernel(::std::int8_t const* const __restrict a, ::std::int8_t* const __restrict b,
                             ::std::size_t const num) noexcept {
     ::details::vec_sqrt_kernel_<Kernel * Tier, ndebug><<<Kernel, Tier>>>(a, b, num);
 }
@@ -250,7 +250,7 @@ inline void vec_sqrt_kernel(::std::int8_t const*const __restrict a, ::std::int8_
 namespace details {
 
 template<::std::size_t ProcNum>
-__global__ void vec_min_kernel_(::std::int8_t const*const __restrict a, ::std::int8_t*const __restrict b,
+__global__ void vec_min_kernel_(::std::int8_t const* const __restrict a, ::std::int8_t* const __restrict b,
                                 ::std::size_t const num) {
     for (::std::size_t i{}; i < num; ++i) {
         if (a[i] < *b) {
@@ -270,7 +270,7 @@ __global__ void vec_min_kernel_(::std::int8_t const*const __restrict a, ::std::i
  */
 template<::std::size_t Kernel, ::std::size_t Tier>
 [[gnu::always_inline]]
-inline void vec_min_kernel(::std::int8_t const*const __restrict a, ::std::int8_t*const __restrict b,
+inline void vec_min_kernel(::std::int8_t const* const __restrict a, ::std::int8_t* const __restrict b,
                            ::std::size_t const num) noexcept {
     ::details::vec_min_kernel_<Kernel * Tier><<<Kernel, Tier>>>(a, b, num);
 }
@@ -278,7 +278,7 @@ inline void vec_min_kernel(::std::int8_t const*const __restrict a, ::std::int8_t
 namespace details {
 
 template<::std::size_t ProcNum>
-__global__ void vec_max_kernel_(::std::int8_t const*const __restrict a, ::std::int8_t*const __restrict b,
+__global__ void vec_max_kernel_(::std::int8_t const* const __restrict a, ::std::int8_t* const __restrict b,
                                 ::std::size_t const num) {
     for (::std::size_t i{}; i < num; ++i) {
         if (a[i] > *b) {
@@ -291,15 +291,14 @@ __global__ void vec_max_kernel_(::std::int8_t const*const __restrict a, ::std::i
 } // namespace details
 
 /**
-    * @brief Find max value in vector a and store it in b
-    * @param[in]  a Vector a
-    * @param[out] b max value
-    * @param[in]  num Number of elements in vector a
-    */
+ * @brief Find max value in vector a and store it in b
+ * @param[in]  a Vector a
+ * @param[out] b max value
+ * @param[in]  num Number of elements in vector a
+ */
 template<::std::size_t Kernel, ::std::size_t Tier>
 [[gnu::always_inline]]
-inline void vec_max_kernel(::std::int8_t const*const __restrict a, ::std::int8_t*const __restrict b,
-                            ::std::size_t const num) noexcept {
+inline void vec_max_kernel(::std::int8_t const* const __restrict a, ::std::int8_t* const __restrict b,
+                           ::std::size_t const num) noexcept {
     ::details::vec_max_kernel_<Kernel * Tier><<<Kernel, Tier>>>(a, b, num);
 }
-
