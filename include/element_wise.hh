@@ -239,3 +239,29 @@ inline void vec_sqrt_kernel(::std::int8_t*__restrict a, ::std::int8_t*__restrict
     ::details::vec_sqrt_kernel_<Kernel * Tier, ndebug><<<Kernel, Tier>>>(a, b, num);
 }
 
+namespace details {
+
+template<::std::size_t ProcNum>
+__global__
+void vec_min_kernel_(::std::int8_t const*const __restrict a, ::std::int8_t*const __restrict b, ::std::size_t num) {
+    for (::std::size_t i{}; i < num; ++i) {
+        if (a[i] < *b) {
+            *b = a[i];
+        }
+    }
+    RISCV_FENCE_I;  // Flush cache
+}
+
+} // namespace details
+
+/**
+ * @brief Find minimum value in vector a and store it in b
+ * @param[in]  a Vector a
+ * @param[out] b Minimum value
+ * @param[in]  num Number of elements in vector a
+ */
+template<::std::size_t Kernel, ::std::size_t Tier>
+[[gnu::always_inline]]
+inline void vec_min_kernel(::std::int8_t const*const __restrict a, ::std::int8_t*const __restrict b, ::std::size_t num) noexcept {
+    ::details::vec_min_kernel_<Kernel * Tier><<<Kernel, Tier>>>(a, b, num);
+}
