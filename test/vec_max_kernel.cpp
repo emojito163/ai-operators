@@ -1,4 +1,3 @@
-#include <cmath>
 #include <cstdlib>
 #include <cstdint>
 
@@ -8,8 +7,8 @@
 int main() {
     // NOTE data size must be multiple of 64 to fill cache line.
     constexpr ::std::size_t n{64 * 4};
-    auto a_host = reinterpret_cast<int8_t*>(malloc(n * sizeof(int8_t)));
-    auto c_host = reinterpret_cast<int8_t*>(malloc(n * sizeof(int8_t)));
+    int8_t a_host[n]{};
+    int8_t c_host[n]{};
 
     int8_t* a_dev = nullptr;
     int8_t* c_dev = nullptr;
@@ -23,24 +22,19 @@ int main() {
     hdplMemcpy(a_dev, a_host, n * sizeof(int8_t), hdplMemcpyHostToDevice);
 
     // Launch kernel
-    vec_exp_kernel<1, 4>(a_dev, c_dev, n);
+    vec_max_kernel<1, 4>(a_dev, c_dev, n);
 
     hdplStreamSynchronize(nullptr);
 
     hdplMemcpy(c_host, c_dev, n * sizeof(int8_t), hdplMemcpyDeviceToHost);
 
-    for (::std::size_t i{}; i < n; i++) {
-        if (c_host[i] != static_cast<int8_t>(::std::min(::std::exp(i % 128), 127.)))
+    if (c_host[0] != 127)
 #if __has_cpp_attribute(unlikely)
-            [[unlikely]]
+        [[unlikely]]
 #endif
-        {
-            __builtin_trap();
-        }
+    {
+        __builtin_trap();
     }
-
-    free(a_host);
-    free(c_host);
 
     hdplFree(a_dev);
     hdplFree(c_dev);
